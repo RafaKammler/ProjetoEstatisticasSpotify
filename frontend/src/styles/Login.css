@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: radial-gradient(circle at top left, #0f3d2e, #0a0a0a);
+    color: var(--text-white);
+}
+
+.login-page {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.login-page {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Caixa principal */
+.login-container {
+    background: rgba(24, 24, 24, 0.9);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Logo do Spotify */
+.spotify-logo {
+    width: 80px;
+    margin-bottom: 1.5rem;
+}
+
+/* Título */
+.login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+}
+
+/* Texto */
+.login-description {
+    color: var(--spotify-light-gray);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+/* Botão */
+.spotify-login-btn {
+    background-color: var(--spotify-green);
+    color: var(--text-white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 500px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.spotify-login-btn:hover {
+    background-color: var(--spotify-green-hover);
+    transform: scale(1.07);
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.6);
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 2rem;
+    }
+    .login-title {
+        font-size: 1.5rem;
+    }
+    .login-description {
+        font-size: 0.9rem;
+    }
+    .spotify-login-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
