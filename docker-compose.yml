@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: projeto-spotify-db
+    environment:
+      POSTGRES_DB: spotify_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: http://backend:5000/api
+    ports:
+      - "5173:80"
+    restart: always
+
+volumes:
+  postgres_data:
