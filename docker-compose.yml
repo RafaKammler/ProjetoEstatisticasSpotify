@@ -1,15 +1,32 @@
-version: "3.8"
-
 services:
   db:
     image: postgres:16-alpine
     container_name: projeto-spotify-db
     environment:
       POSTGRES_DB: spotify_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+    container_name: projeto-spotify-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/spotify_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_SECRET}
+      - SPOTIFY_REDIRECT_URI=http://127.0.0.1:8080/api/auth/callback
+    depends_on:
+      - db
     restart: always
 
   frontend:
@@ -19,6 +36,8 @@ services:
         REACT_APP_API_URL: http://backend:5000/api
     ports:
       - "5173:80"
+    depends_on:
+      - backend
     restart: always
 
 volumes:
