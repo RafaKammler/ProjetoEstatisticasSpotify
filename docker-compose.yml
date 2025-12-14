@@ -12,13 +12,35 @@ services:
       - "5432:5432"
     restart: always
 
+  backend:
+    build:
+      context: ./backend
+    container_name: projeto-spotify-backend
+    ports:
+      - "5000:5000" # Porta da aplicação
+      - "5005:5005" # Porta de depuração
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/spotify_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_SECRET}
+      - SPOTIFY_REDIRECT_URI=http://127.0.0.1:5000/api/auth/callback
+      - JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    depends_on:
+      - db
+    restart: always
+
   frontend:
     build:
       context: ./frontend
       args:
-        REACT_APP_API_URL: http://backend:5000/api
+        VITE_API_URL: http://localhost:5000/api
     ports:
       - "5173:80"
+      - "9229:9229"
+    depends_on:
+      - backend
     restart: always
 
 volumes:

@@ -2,7 +2,20 @@ import React from 'react';
 import '../styles/Login.css';
 import { FaSpotify } from "react-icons/fa";
 
+const VITE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 function Login() {
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.get(`${VITE_API_URL}/auth/login`);
+            const { url } = response.data;
+            window.location.href = url;
+        } catch (error) {
+            alert(error);
+        }
+    }
+
     return (
         <div className="login-page">
             <div className="login-container">
