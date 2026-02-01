@@ -27,6 +27,11 @@ public class SpotifyService {
         return url;
     }
 
+    public static String getUsuarioSpotifyUrl() {
+        return "https://api.spotify.com/v1/me";
+    }
+
+
     public static HttpResponse<String> getSpotifyToken(String codigo, String clientId, String clientSecret, String redirectUri) {
         String url = EndpointsSpotifyApiEnum.BASE_URL_TOKEN.getUrl();
         String credentials = clientId + ":" + clientSecret;
@@ -44,6 +49,26 @@ public class SpotifyService {
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Authorization", authorizationHeader)
                     .POST(HttpRequest.BodyPublishers.ofString(form))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+public static HttpResponse<String> getInformacoesUsuario(String token) {
+        String url = getUsuarioSpotifyUrl();
+
+        try {
+            HttpClient client = HttpClient.newBuilder().build();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

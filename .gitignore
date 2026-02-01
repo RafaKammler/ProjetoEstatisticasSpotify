@@ -1,6 +1,5 @@
 # Arquivo .gitignore consolidado e revisado
 
-### Segredos e Arquivos de Ambiente (NÃO ENVIAR PARA O GIT) ###
 .env
 *.local
 /backend/src/main/resources/application.properties
@@ -35,8 +34,6 @@ lerna-debug.log*
 
 ### Backend - Java / Spring Boot / Maven ###
 /backend/target/
-# O arquivo HELP.md é opcional, pode ser ignorado ou não
-/backend/HELP.md
 
 ### Frontend - React / Node.js ###
 /frontend/node_modules/
